@@ -1,0 +1,97 @@
+{
+    "name": "ASVspoof 2019 LA",
+    "n_gpu": 2,
+
+    "arch": {
+        "type": "ConvModel",
+        "args": {}
+    },
+    "dataset": {
+
+        "train":
+        {
+           "dataset": {
+                "type": "ASVDataset",
+                "args":{
+                "data_root": "/data3/luchao/LA",
+                "sample_size": "",
+                "data_model": "train"
+                }
+           },
+           "loader":{
+                "batch_size": 100,
+                "shuffle": true,
+                "pin_memory": false,
+                "num_workers": 4,
+                "drop_last": false
+            }
+        },
+        "validate":
+        {
+           "dataset": {
+                "type": "ASVDataset",
+                "args":{
+                "data_root": "/data3/luchao/LA",
+                "sample_size": "",
+                "data_model": "dev"
+                }
+           },
+           "loader":{
+                "batch_size": 100,
+                "shuffle": false,
+                "pin_memory": false,
+                "num_workers": 4,
+                "drop_last": false
+            }
+        },
+        "test":
+        {
+           "dataset": {
+                "type": "ASVDataset",
+                "args":{
+                "data_root": "/data3/luchao/LA",
+                "sample_size": 128,
+                "data_model": "test"
+                }
+           },
+           "loader":{
+                "batch_size": 10,
+                "shuffle": false,
+                "pin_memory": false,
+                "num_workers": 4,
+                "drop_last": false
+            }
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.0001,
+            "weight_decay": 0.008,
+            "amsgrad": true
+        }
+    },
+    "loss": "nll_loss",
+    "metrics": [
+        "accuracy"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 20,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "min val_loss",
+        "early_stop": 10,
+
+        "tensorboard": true
+    }
+}
