@@ -1,5 +1,5 @@
 {
-    "name": "ASVspoof 2019 LA",
+    "name": "ASVspoof2019_LA",
     "n_gpu": 2,
 
     "arch": {
@@ -19,7 +19,7 @@
                 }
            },
            "loader":{
-                "batch_size": 100,
+                "batch_size": 64,
                 "shuffle": true,
                 "pin_memory": false,
                 "num_workers": 4,
@@ -37,7 +37,7 @@
                 }
            },
            "loader":{
-                "batch_size": 100,
+                "batch_size": 64,
                 "shuffle": false,
                 "pin_memory": false,
                 "num_workers": 4,
@@ -55,7 +55,7 @@
                 }
            },
            "loader":{
-                "batch_size": 10,
+                "batch_size": 64,
                 "shuffle": false,
                 "pin_memory": false,
                 "num_workers": 4,
@@ -67,7 +67,7 @@
         "type": "Adam",
         "args":{
             "lr": 0.0001,
-            "weight_decay": 0.008,
+            "weight_decay": 0,
             "amsgrad": true
         }
     },
@@ -83,7 +83,7 @@
         }
     },
     "trainer": {
-        "epochs": 100,
+        "epochs": 200,
 
         "save_dir": "saved/",
         "save_period": 1,

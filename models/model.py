@@ -16,8 +16,8 @@ sys.path.append('../')
 from  base import BaseModel
 # from base.base_model import BaseModel
 # print(os.path.isdir('../'))
-
-
+from torchsummary import summary
+# resnet 34
 
 class ResNetBlock(nn.Module):
     def __init__(self, in_depth, depth, first=False):
@@ -67,7 +67,7 @@ class ConvModel(BaseModel):
         self.block7 = ResNetBlock(32, 32, False)
         self.block8 = ResNetBlock(32, 32, False)
         self.block9 = ResNetBlock(32, 32, False)
-        self.block10=  ResNetBlock(32, 32, False)
+        self.block10= ResNetBlock(32, 32, False)
         self.block11 = ResNetBlock(32, 32, False)
         self.lrelu = nn.LeakyReLU(0.01)
         self.bn = nn.BatchNorm2d(32)
@@ -75,6 +75,16 @@ class ConvModel(BaseModel):
         self.logsoftmax = nn.LogSoftmax(dim=1)
         self.fc1 = nn.Linear(64, 128)
         self.fc2 = nn.Linear(128, self.num_classes)
+    #     self._initialize_weights()
+    #
+    # def _initialize_weights(self):
+    #     for m in self.modules():
+    #         if isinstance(m, (nn.Conv1d, nn.Linear)):
+    #             if hasattr(m, 'weight'):
+    #                 torch.nn.init.xavier_normal_(m.weight.data)
+    #
+    #             if hasattr(m, 'bias') and m.bias is not None:
+    #                 m.bias.data.fill_(1e-5)
 
     def forward(self, x):
         batch_size = x.size(0)

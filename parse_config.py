@@ -9,7 +9,7 @@ from utils import read_json, write_json
 
 
 class ConfigParser:
-    def __init__(self, config, resume=None, modification=None, run_id=None):
+    def __init__(self, config, resume=None, modification=None,args=None, run_id=None):
         """
         class to parse configuration json file. Handles hyperparameters for training, initializations of modules, checkpoint saving
         and logging module.
@@ -21,7 +21,7 @@ class ConfigParser:
         # load config file and apply modification
         self._config = _update_config(config, modification)
         self.resume = resume
-
+        self.args = args
         # set save_dir where trained model and log will be saved.
         save_dir = Path(self.config['trainer']['save_dir'])
 
@@ -39,6 +39,7 @@ class ConfigParser:
         # save updated config file to the checkpoint dir
         write_json(self.config, self.save_dir / 'config.json')
 
+        write_json(self.config, '/data3/luchao/LA_spoof_new/saved/best_models/config.json')
         # configure logging module
         setup_logging(self.log_dir)
         self.log_levels = {
@@ -75,7 +76,7 @@ class ConfigParser:
 
         # parse custom cli options into dictionary
         modification = {opt.target : getattr(args, _get_opt_name(opt.flags)) for opt in options}
-        return cls(config, resume, modification)
+        return cls(config, resume, modification,args)
 
     def init_obj(self, name, module, *args, **kwargs):
         """
